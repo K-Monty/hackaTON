@@ -1,4 +1,5 @@
 from flask import Flask,render_template
+import requests
 
 app = Flask(__name__, template_folder='templates')
 
@@ -12,6 +13,9 @@ def calling():
 
 @app.route("/in_call")
 def in_call():
+    print("Starting payment channel with Tonfull... ")
+    res = requests.get("http://localhost:8888/startCall")
+    print("Tonefull server response: ",  res.content.decode('utf-8'))
     return render_template("call_fetched.html")
 
 @app.route("/call_ended")

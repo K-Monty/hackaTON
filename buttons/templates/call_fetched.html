@@ -6,20 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WhatsApp CTA Button with pure HTML CSS</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
-
 </head>
 
-<div>
-<figure style="width:50%; float: left; display: inline-block;">
-  <img src="../static/cat.png" alt="Italian Trulli">
-  <h1>You are calling with Professor CAT</h1>
+<body>
+<figure style="width:40%; text-align: center; display: inline-block;">
+  <img src="{{ url_for('static', filename='cat.png') }}" alt="Italian Trulli">
+  <h2>You are calling with Professor CAT</h2>
 </figure>
-<h1 style="width:50%; float: right; display: inline-block;">Here goes backend stuff
-iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii lala
-</h1>
-  
-</div>
-
-<button id="end_call_button" onclick="location.href='/call_ended'">End call</button>
-
+<h2>Credit: <span>0.01</span> TON&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<button onclick="location.href='/call_ended'">End call</button>
+</body>
 </html>
