@@ -1,18 +1,21 @@
 
-var http = require('http');
+const fs = require('fs').promises;
+const express = require('express');
 
-const projectName = 'Tonefull'
-console.log(`Starting HTTP server, project ${projectName}.`)
+const app = express();
+const projectName = 'Tonefull';
+console.log(`Starting HTTP server, project ${projectName}...`);
 
-http.createServer(function (req, res) 
-{
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write('<html>');
-  res.write(`<head><title>${projectName}${req.url}</title></head>`);
-  res.write('<body>');
-  res.write('<p>Hello word from the server!</p>');
-  res.write('</body>');
-  res.write('</html>');
-  res.end();
-}
-).listen(8888);
+app.use(express.static('call_buttons/static'));
+
+app.get('/', (req, res) => {
+    fs.readFile("./call_buttons/animation/call.html").then(contents => {
+        res.setHeader("Content-Type", "text/html");
+        res.writeHead(200);
+    //    res.write('<link rel="stylesheet" type="text/css" href="call_buttons/to_call_button/button.css" />');
+        res.end(contents);
+    });
+  });
+
+app.listen(8888, 'localhost', () => {
+    console.log(`Server is running.`);});
