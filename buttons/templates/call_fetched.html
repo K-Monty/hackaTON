@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WhatsApp CTA Button with pure HTML CSS</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -13,7 +14,26 @@
   <img src="{{ url_for('static', filename='cat.png') }}" alt="Italian Trulli">
   <h2>You are calling with Professor CAT</h2>
 </figure>
-<h2>Credit: <span>0.01</span> TON&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<div>
+<h2>Time: <span id="time">0 minutes 0 seconds</span>&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+<h2>Credit: <span id="balance">x.xxxxxxx</span> TON&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+</div>
 <button onclick="location.href='/call_ended'">End call</button>
+
+<script>
+var startTimestamp = Date.now();
+var objPollTimer = setInterval(pollTimer, 1000);
+function pollTimer() {
+    var d = Date.now();
+    var minutes = Math.floor(((d - startTimestamp) / 1000) / 60);
+    var seconds = Math.round(((d - startTimestamp) / 1000) - minutes * 60); 
+    $("#time").html(minutes + " minutes " + seconds + " seconds");
+
+    $.get("/api/balance", function( response ) {
+      $("#balance").html(JSON.parse(response).balance.toFixed(8));
+    });
+}
+pollTimer();
+</script>
 </body>
 </html>
