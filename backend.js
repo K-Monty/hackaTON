@@ -4,16 +4,17 @@
  * 
  * @param {function} workFunc  Callback containing the work to be done
  *                             for each interval
- * @param {int}      interval  Interval speed (in milliseconds)
- * @param {function} errorFunc (Optional) Callback to run if the drift
- *                             exceeds interval
+ * @param {int}      interval  Interval speed (in milliseconds) (combining with payment channel function this becomes how frequent 
+ * user A transfer money to user B)
+ * @param {float}    ratePerInterval how much TON (NOT in nano) is extracted from user A to B per interval
  */
- function AdjustingInterval(workFunc, interval, ratePerMiute) {
+
+ function AdjustingInterval(workFunc, interval, ratePerInterval) {
   var that = this;
   var expected, timeout;
   this.interval = interval;
-  this.justSomeNumber = 0;
-  this.ratePerMiute = ratePerMiute;
+  this.intervalNum = 0;
+  this.ratePerInterval = ratePerInterval;
 
   this.start = function() {
       expected = Date.now() + this.interval;
@@ -26,8 +27,8 @@
 
   function step() {
       var drift = Date.now() - expected;
-      that.justSomeNumber += 1;
-      workFunc(that.justSomeNumber, that.ratePerMiute);
+      that.intervalNum += 1;
+      workFunc(that.intervalNum, that.ratePerInterval);
       expected += that.interval;
       timeout = setTimeout(step, Math.max(0, that.interval-drift));
   }
@@ -39,25 +40,7 @@
 
 // For testing purposes, we'll just increment
 // this and send it out to the console.
-var justSomeNumber = 0;
-
-// Define the work to be done
-var doWork = function() {
-    console.log(++justSomeNumber);
-};
-
-// Define what to do if something goes wrong
-var doError = function() {
-    console.warn('The time drift exceeded the interval.');
-};
-
-// (The third argument is optional)
-// var ticker = new AdjustingInterval(doWork, 1000, doError);
-
-
-// You can start or stop your timer at will
-// ticker.start();
-// ticker.stop();
+var intervalNum = 0;
 
 // You can also change the interval while it's in progress
 //ticker.interval = 99;
@@ -244,26 +227,26 @@ const init = async () => {
   // assume A keep giving B money per minute
 
   /*
-  while (justSomeNumber < 20) {
-    console.log(justSomeNumber)
-    justSomeNumber++;
+  while (intervalNum < 20) {
+    console.log(intervalNum)
+    intervalNum++;
   }
 
   return;
   */
-  var updateContract = async function(justSomeNumber, ratePerMiute) {
-    console.log("We are in updateContract with justSomeNumber=", justSomeNumber);
+  var updateContract = async function(intervalNum, ratePerInterval) {
+    console.log("We are in updateContract with intervalNum=", intervalNum);
 
-    balanceA_inTON -= ratePerMiute;
-    balanceB_inTON += ratePerMiute;
+    balanceA_inTON -= ratePerInterval;
+    balanceB_inTON += ratePerInterval;
 
-    channel_name = 'channelState' + justSomeNumber;
+    channel_name = 'channelState' + intervalNum;
     console.log(channel_name)
 
     channel_states[channel_name] = {
       balanceA: toNano(balanceA_inTON.toFixed(8).toString()),
       balanceB: toNano(balanceB_inTON.toFixed(8).toString()),
-      seqnoA: new BN(justSomeNumber),
+      seqnoA: new BN(intervalNum),
       seqnoB: new BN(0),
     }
     
@@ -274,15 +257,15 @@ const init = async () => {
     }
     console.log(channel_states[channel_name]);
 
-    if (justSomeNumber > 2) {
+    if (intervalNum > 2) {
       ticker.stop();
-      await closeContract(justSomeNumber);
+      await closeContract(intervalNum);
     }
   };
 
 
-  var closeContract = async function(justSomeNumber) {
-    channel_name = 'channelState' + justSomeNumber;
+  var closeContract = async function(intervalNum) {
+    channel_name = 'channelState' + intervalNum;
     var signatureCloseB = await channelB.signClose(channel_states[channel_name]);
     console.log(signatureCloseB);
     await fromWalletA.close({
