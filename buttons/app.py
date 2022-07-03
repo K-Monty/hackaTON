@@ -5,7 +5,7 @@ app = Flask(__name__, template_folder='templates')
 debug_log = print
 
 def tonefull_api_call(request: str):
-    result = requests.get("http://localhost:8888/" + request)  
+    result = requests.get("http://localhost:8888/" + request, headers={'Cache-Control': 'no-cache'})  
     debug_log("Tonefull server response ",  result.content.decode('utf-8'), " to request ", request)
     return result
 

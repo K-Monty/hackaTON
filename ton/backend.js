@@ -286,4 +286,4 @@ const init = async () => {
   return;
 }
   
-init();
+

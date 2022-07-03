@@ -1,6 +1,6 @@
 
 var objTimer = null;
-var justSomeNumber = 0.01;
+var justSomeNumber = 10.05643;
 const justSomeRate = 0.0001;
 
 
