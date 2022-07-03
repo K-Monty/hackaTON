@@ -7,7 +7,7 @@ In short, TONeful enables:
 the customers to talk 1-to-1 with the professionals without being interrupted by session limitations, and only being charged according to their service quality
 the high-quality professionals to be rewarded by receiving the TONs they deserve.
 
-This repo is dedicated to the first prototype of TONful. We introduce basic functionalities of the app, both frontend and backend. Unfortunately, by the time we have to wrap up everything, the frontend (other folders in repo) and backend (backend.js) part of this app is not connected yet. Additionally, the frontend part is also still having minor caching problem, which causes the credit of customers not being updated regularly as expected (only update after refreshing the browser!).
+This repo is dedicated to the first prototype of TONful. We introduce basic functionalities of the app, both frontend and backend. Unfortunately, by the time we have to wrap up everything, the frontend (other folders in repo) and backend (ton/backend.js) part of this app is not connected yet. Additionally, the frontend part is also still having minor caching problem, which causes the credit of customers not being updated regularly as expected (only update after refreshing the browser!).
 
 How to run the frontend of this app: 
 
