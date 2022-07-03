@@ -25,7 +25,7 @@ We will dedicate the section below to a brief overview of the TONeful prototype.
 
 Github repo [here](https://github.com/K-Monty/hackaTON).
 
-Open the video in [YouTube](https://www.youtube.com)
+Open the video in [YouTube](https://youtu.be/R_XQvbGdY3w)
 
 -----------------------------------------------------------------------
 
