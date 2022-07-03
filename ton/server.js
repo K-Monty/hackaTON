@@ -5,12 +5,12 @@ const express = require('express');
 const app = express();
 const { startChannel, stopChannel, getBalance } = require('./mock_backend');
 
-app.get('/startCall', (req, res) => {
+app.get('/startChannel', (req, res) => {
     startChannel();
     res.json({ status: 'Ok' });
 });
 
-app.get('/endCall', (req, res) => {
+app.get('/endChannel', (req, res) => {
     stopChannel();
     res.json({ status: 'Ok' });
 });
