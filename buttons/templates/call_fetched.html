@@ -29,7 +29,7 @@ function pollTimer() {
     var seconds = Math.round(((d - startTimestamp) / 1000) - minutes * 60); 
     $("#time").html(minutes + " minutes " + seconds + " seconds");
 
-    $.get("/api/balance", function( response ) {
+    $.get({url: "/api/balance", cache: false}).then(function( response ) {
       $("#balance").html(JSON.parse(response).balance.toFixed(8));
     });
 }
