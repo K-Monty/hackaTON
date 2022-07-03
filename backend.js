@@ -50,7 +50,7 @@ const toNano = TonWeb.utils.toNano;
 
 const init = async () => {
   const providerUrl = 'https://testnet.toncenter.com/api/v2/jsonRPC'; // TON HTTP API url. Use this url for testnet
-  const apiKey = 'b59f466e18886e0f86c51fced03f74b55c17ea5fd67c607a0a2b667b91398ec8';
+  const apiKey = 'MY_TEST_WALLET_API_KEY';
   const tonweb = new TonWeb(new TonWeb.HttpProvider(providerUrl, {apiKey})); // Initialize TON SDK
 
   //----------------------------------------------------------------------
@@ -58,10 +58,10 @@ const init = async () => {
   // The payment channel is established between two participants A and B.
   // Each has own secret key, which he does not reveal to the other.
 
-  const seedA = TonWeb.utils.base64ToBytes('vt58J2v6FaSuXFGcyGtqT5elpVxcZ+I1zgu/GUfA5uY='); // A's private (secret) key
+  const seedA = TonWeb.utils.base64ToBytes('A_PRIVATE KEY'); // A's private (secret) key
   const keyPairA = tonweb.utils.keyPairFromSeed(seedA); // Obtain key pair (public key and private key)
 
-  const seedB = TonWeb.utils.base64ToBytes('at58J2v6FaSuXFGcyGtqT5elpVxcZ+I1zgu/GUfA5uY='); // B's private (secret) key
+  const seedB = TonWeb.utils.base64ToBytes('B_PRIVATE_KEY'); // B's private (secret) key
   const keyPairB = tonweb.utils.keyPairFromSeed(seedB); // Obtain key pair (public key and private key)
 
   // With a key pair, you can create a wallet.
